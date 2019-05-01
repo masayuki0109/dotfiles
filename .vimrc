@@ -37,7 +37,8 @@ nnoremap j gj
 nnoremap k gk
 " シンタックスハイライトの有効化
 syntax enable
-
+" □や○文字が崩れる問題を解決
+set ambiwidth=double 
 
 " Tab系
 " 不可視文字を可視化(タブが「▸-」と表示される)
