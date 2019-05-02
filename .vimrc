@@ -81,14 +81,11 @@ Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-endwise'
 " コメントON/OFFを手軽に実行
 Plug 'tomtom/tcomment_vim'
-" インデントに色を付けて見やすくする
-" Plug 'nathanaelkane/vim-indent-guides'
-
+" ruby用プラグイン
+Plug 'vim-ruby/vim-ruby'
 call plug#end()
 """"""""""""""""""""""""""""""
 
-" vimを立ち上げたときに、自動的にvim-indent-guidesをオンにする
-" let g:indent_guides_enable_on_vim_startup = 1
 
 
 " http://blog.remora.cx/2010/12/vim-ref-with-unite.html
