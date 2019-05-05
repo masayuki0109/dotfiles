@@ -35,6 +35,7 @@ set wildmode=list:longest
 " 折り返し時に表示行単位での移動できるようにする
 nnoremap j gj
 nnoremap k gk
+" u
 " シンタックスハイライトの有効化
 syntax enable
 " □や○文字が崩れる問題を解決
@@ -65,7 +66,10 @@ set hlsearch
 " ESC連打でハイライト解除
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
 
-
+" 履歴系
+set history=200
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
 
 """"""""""""""""""""""""""""""
 " プラグインのセットアップ
