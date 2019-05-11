@@ -75,6 +75,14 @@ set history=200
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 
+
+" 削除有効化
+"BSで削除できるものを指定する
+" indent  : 行頭の空白
+" eol     : 改行
+" start   : 挿入モード開始位置より手前の文字
+set backspace=indent,eol,start
+
 """"""""""""""""""""""""""""""
 " プラグインのセットアップ
 """"""""""""""""""""""""""""""
