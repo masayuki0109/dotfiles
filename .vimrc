@@ -1,4 +1,5 @@
 " setting
+" ギット使えるかテスト
 "文字コードをUFT-8に設定
 set fenc=utf-8
 " バックアップファイルを作らない
@@ -19,7 +20,7 @@ set number
 " 現在の行を強調表示
 set cursorline
 " 現在の行を強調表示（縦）
-set cursorcolumn
+"set cursorcolumn
 " 行末の1文字先までカーソルを移動できるように
 set virtualedit=onemore
 " インデントはスマートインデント
@@ -40,6 +41,9 @@ nnoremap k gk
 syntax enable
 " □や○文字が崩れる問題を解決
 set ambiwidth=double 
+" iterm2用
+let &t_SI = "\e]50;CursorShape=1\x7"
+let &t_EI = "\e]50;CursorShape=0\x7"
 
 " Tab系
 " 不可視文字を可視化(タブが「▸-」と表示される)
@@ -51,7 +55,7 @@ set tabstop=2
 " 行頭でのTab文字の表示幅
 set shiftwidth=2
 
-
+set tags+=~/.tags
 " 検索系
 " 検索文字列が小文字の場合は大文字小文字を区別なく検索する
 set ignorecase
@@ -88,8 +92,11 @@ Plug 'tpope/vim-endwise'
 Plug 'tomtom/tcomment_vim'
 " ruby用プラグイン
 Plug 'vim-ruby/vim-ruby'
+" html保管
+Plug 'mattn/emmet-vim'
 call plug#end()
 """"""""""""""""""""""""""""""
+
 
 
 
