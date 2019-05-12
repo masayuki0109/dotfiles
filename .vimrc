@@ -104,6 +104,8 @@ Plug 'tomtom/tcomment_vim'
 Plug 'vim-ruby/vim-ruby'
 " html保管
 Plug 'mattn/emmet-vim'
+"シンタックスエラーチェック
+Plug 'scrooloose/syntastic'
 " deoplete
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -133,7 +135,13 @@ let g:neocomplete#auto_completion_start_length = 1
 inoremap <expr><BS> neocomplete#smart_close_popup()."<C-h>"
 """"""""""""""""""""""""""""""
 
+""""""""""""""""""""""""""""""
+" syntastic設定
+""""""""""""""""""""""""""""""
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['ruby'] }
+let g:syntastic_ruby_checkers = ['rubocop']
 
+""""""""""""""""""""""""""""""
 
 
 " http://blog.remora.cx/2010/12/vim-ref-with-unite.html
