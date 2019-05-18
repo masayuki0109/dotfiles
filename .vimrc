@@ -12,7 +12,8 @@ set autoread
 set hidden
 " 入力中のコマンドをステータスに表示する
 set showcmd
-
+" 入力モード解除
+inoremap <silent> jj <ESC>
 
 " 見た目系
 " 行番号を表示
@@ -113,8 +114,12 @@ else
   Plug 'Shougo/deoplete.nvim'
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
-  Plug 'fishbullet/deoplete-ruby'
+  " Plug 'fishbullet/deoplete-ruby'
 endif
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
+" rails系
+Plug 'tpope/vim-rails'
 call plug#end()
 """"""""""""""""""""""""""""""
 
@@ -124,16 +129,17 @@ call plug#end()
 " 起動時に有効
 let g:deoplete#enable_at_startup = 1
 " smartcase有効化. 大文字が入力されるまで大文字小文字の区別を無視する
-let g:neocomplete#enable_smart_case = 1
+let g:deoplete#enable_smart_case = 1
 " 3文字以上の単語に対して補完を有効にする
-let g:neocomplete#min_keyword_length = 3
+let g:deoplete#auto_complete_start_length = 3
 " 区切り文字まで補完する
-let g:neocomplete#enable_auto_delimiter = 1
-" 1文字目の入力から補完のポップアップを表示
-let g:neocomplete#auto_completion_start_length = 1
+let g:deoplete#enable_auto_delimiter = 1
 " バックスペースで補完のポップアップを閉じる
-inoremap <expr><BS> neocomplete#smart_close_popup()."<C-h>"
+inoremap <expr><BS> deoplete#smart_close_popup()."<C-h>"
 """"""""""""""""""""""""""""""
+
+
+
 
 """"""""""""""""""""""""""""""
 " syntastic設定
@@ -142,6 +148,19 @@ let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['ruby'] }
 let g:syntastic_ruby_checkers = ['rubocop']
 
 """"""""""""""""""""""""""""""
+
+
+
+
+""""""""""""""""""""""""""""""
+" NeoSnippet設定
+""""""""""""""""""""""""""""""
+autocmd User Rails.view*                 NeoSnippetSource ~/.vim/snippet/ruby.rails.view.snip
+autocmd User Rails.controller*           NeoSnippetSource ~/.vim/snippet/ruby.rails.controller.snip
+autocmd User Rails/db/migrate/*          NeoSnippetSource ~/.vim/snippet/ruby.rails.migrate.snip
+autocmd User Rails/config/routes.rb      NeoSnippetSource ~/.vim/snippet/ruby.rails.route.snip
+""""""""""""""""""""""""""""""
+
 
 
 " http://blog.remora.cx/2010/12/vim-ref-with-unite.html
