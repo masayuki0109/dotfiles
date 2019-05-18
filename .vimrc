@@ -153,6 +153,18 @@ let g:syntastic_ruby_checkers = ['rubocop']
 
 
 """"""""""""""""""""""""""""""
+" NERDTree設定
+""""""""""""""""""""""""""""""
+autocmd VimEnter * NERDTree
+autocmd VimEnter * wincmd p
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+""""""""""""""""""""""""""""""
+
+
+
+
+
+""""""""""""""""""""""""""""""
 " NeoSnippet設定
 """"""""""""""""""""""""""""""
 autocmd User Rails.view*                 NeoSnippetSource ~/.vim/snippet/ruby.rails.view.snip
