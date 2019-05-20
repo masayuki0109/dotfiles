@@ -158,6 +158,7 @@ let g:syntastic_ruby_checkers = ['rubocop']
 autocmd VimEnter * NERDTree
 autocmd VimEnter * wincmd p
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+map <C-n> :NERDTreeFocus<CR>
 """"""""""""""""""""""""""""""
 
 
@@ -184,7 +185,7 @@ let g:unite_enable_start_insert=1
 " バッファ一覧
 noremap <C-P> :Unite buffer<CR>
 " ファイル一覧
-noremap <C-N> :Unite -buffer-name=file file<CR>
+" noremap <C-N> :Unite -buffer-name=file file<CR>
 " 最近使ったファイルの一覧
 noremap <C-Z> :Unite file_mru<CR>
 " sourcesを「今開いているファイルのディレクトリ」とする
