@@ -1,5 +1,3 @@
-" setting
-" ギット使えるかテスト
 "文字コードをUFT-8に設定
 set fenc=utf-8
 " バックアップファイルを作らない
@@ -21,7 +19,7 @@ set number
 " 現在の行を強調表示
 set cursorline
 " 現在の行を強調表示（縦）
-"set cursorcolumn
+" set cursorcolumn
 " 行末の1文字先までカーソルを移動できるように
 set virtualedit=onemore
 " インデントはスマートインデント
@@ -47,14 +45,15 @@ let &t_SI = "\e]50;CursorShape=1\x7"
 let &t_EI = "\e]50;CursorShape=0\x7"
 
 " Tab系
-" 不可視文字を可視化(タブが「▸-」と表示される)
-set list listchars=tab:\▸\-
 " Tab文字を半角スペースにする
 set expandtab
 " 行頭以外のTab文字の表示幅（スペースいくつ分）
 set tabstop=2
 " 行頭でのTab文字の表示幅
 set shiftwidth=2
+" スペース・タブ可視化
+set list
+set listchars=tab:\▸\-,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
 
 set tags+=~/.tags
 " 検索系
@@ -78,6 +77,16 @@ set history=200
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 
+" ペースト
+nnoremap <Space>p "0p
+vnoremap <Space>p "0p
+" クリップボードへ
+nnoremap <C-y> "*y
+vnoremap <C-y> "*y
+onoremap <C-y> "*y
+" 移動
+noremap <S-h>   ^
+noremap <S-l>   $
 
 " 削除有効化
 "BSで削除できるものを指定する
@@ -91,12 +100,6 @@ set backspace=indent,eol,start
 """"""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
 
-" ファイルオープンを便利に
-Plug 'Shougo/unite.vim'
-" Unite.vimで最近使ったファイルを表示できるようにする
-Plug 'Shougo/neomru.vim'
-" ファイルをtree表示してくれる
-Plug 'scrooloose/nerdtree'
 " Ruby向けにendを自動挿入してくれる
 Plug 'tpope/vim-endwise'
 " コメントON/OFFを手軽に実行
@@ -107,6 +110,8 @@ Plug 'vim-ruby/vim-ruby'
 Plug 'mattn/emmet-vim'
 "シンタックスエラーチェック
 Plug 'scrooloose/syntastic'
+"テキストオブジェクト拡張
+Plug 'tpope/vim-surround'
 " deoplete
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -120,8 +125,49 @@ Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 " rails系
 Plug 'tpope/vim-rails'
+" インデント
+Plug 'Yggdroot/indentLine'
+" 検索
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
+Plug 'jremmen/vim-ripgrep'
+
+" スペルチェック
+Plug 'kamykn/spelunker.vim'
 call plug#end()
 """"""""""""""""""""""""""""""
+
+" スペルチェック
+set nospell
+
+""""""""""""""""""""""""""""""
+" fzf設定
+""""""""""""""""""""""""""""""
+" like Spacemacs
+let mapleader = "\<Space>"
+
+nnoremap <Leader>b :Buffers<CR>
+nnoremap <Leader>x :Commands<CR>
+noremap <C-F> :GFiles<CR>
+noremap <C-N> :GFiles?<CR>
+" nnoremap <Leader>f :GFiles<CR>
+nnoremap <Leader>a :Ag<CR>
+nnoremap <Leader>k :bd<CR>
+command! FZFMru call fzf#run({
+\  'source':  v:oldfiles,
+\  'sink':    'e',
+\  'options': '-m -x +s',
+\  'down':    '40%'})
+nnoremap <Leader>r :FZFMru<CR>
+
+""""""""""""""""""""""""""""""
+" ripgrep設定
+""""""""""""""""""""""""""""""
+nnoremap <C-g> :Rg<Space>
+
+""""""""""""""""""""""""""""""
+
 
 """"""""""""""""""""""""""""""
 " deoplete設定
@@ -153,51 +199,11 @@ let g:syntastic_ruby_checkers = ['rubocop']
 
 
 """"""""""""""""""""""""""""""
-" NERDTree設定
-""""""""""""""""""""""""""""""
-autocmd VimEnter * NERDTree
-autocmd VimEnter * wincmd p
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-map <C-n> :NERDTreeFocus<CR>
-""""""""""""""""""""""""""""""
-
-
-
-
-
-""""""""""""""""""""""""""""""
 " NeoSnippet設定
 """"""""""""""""""""""""""""""
 autocmd User Rails.view*                 NeoSnippetSource ~/.vim/snippet/ruby.rails.view.snip
 autocmd User Rails.controller*           NeoSnippetSource ~/.vim/snippet/ruby.rails.controller.snip
 autocmd User Rails/db/migrate/*          NeoSnippetSource ~/.vim/snippet/ruby.rails.migrate.snip
 autocmd User Rails/config/routes.rb      NeoSnippetSource ~/.vim/snippet/ruby.rails.route.snip
-""""""""""""""""""""""""""""""
-
-
-
-" http://blog.remora.cx/2010/12/vim-ref-with-unite.html
-""""""""""""""""""""""""""""""
-" Unit.vimの設定
-""""""""""""""""""""""""""""""
-" 入力モードで開始する
-let g:unite_enable_start_insert=1
-" バッファ一覧
-noremap <C-P> :Unite buffer<CR>
-" ファイル一覧
-" noremap <C-N> :Unite -buffer-name=file file<CR>
-" 最近使ったファイルの一覧
-noremap <C-Z> :Unite file_mru<CR>
-" sourcesを「今開いているファイルのディレクトリ」とする
-noremap :uff :<C-u>UniteWithBufferDir file -buffer-name=file<CR>
-" ウィンドウを分割して開く
-au FileType unite nnoremap <silent> <buffer> <expr> <C-J> unite#do_action('split')
-au FileType unite inoremap <silent> <buffer> <expr> <C-J> unite#do_action('split')
-" ウィンドウを縦に分割して開く
-au FileType unite nnoremap <silent> <buffer> <expr> <C-K> unite#do_action('vsplit')
-au FileType unite inoremap <silent> <buffer> <expr> <C-K> unite#do_action('vsplit')
-" ESCキーを2回押すと終了する
-au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
-au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
 """"""""""""""""""""""""""""""
 
