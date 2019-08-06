@@ -1,4 +1,4 @@
-"文字コードをUFT-8に設定
+" 文字コードをUFT-8に設定
 set fenc=utf-8
 " バックアップファイルを作らない
 set nobackup
@@ -35,7 +35,6 @@ set wildmode=list:longest
 " 折り返し時に表示行単位での移動できるようにする
 nnoremap j gj
 nnoremap k gk
-" u
 " シンタックスハイライトの有効化
 syntax enable
 " □や○文字が崩れる問題を解決
@@ -95,11 +94,22 @@ noremap <S-l>   $
 " start   : 挿入モード開始位置より手前の文字
 set backspace=indent,eol,start
 
+" vimdiffの色設定
+highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=22
+highlight DiffDelete cterm=bold ctermfg=10 ctermbg=52
+highlight DiffChange cterm=bold ctermfg=10 ctermbg=17
+highlight DiffText   cterm=bold ctermfg=10 ctermbg=21
+
+
+
+
 """"""""""""""""""""""""""""""
 " プラグインのセットアップ
 """"""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
 
+" ファイルをtree表示してくれる
+Plug 'scrooloose/nerdtree'
 " Ruby向けにendを自動挿入してくれる
 Plug 'tpope/vim-endwise'
 " コメントON/OFFを手軽に実行
@@ -135,6 +145,9 @@ Plug 'jremmen/vim-ripgrep'
 
 " スペルチェック
 Plug 'kamykn/spelunker.vim'
+
+" カラースキーム
+Plug 'itchyny/lightline.vim'
 call plug#end()
 """"""""""""""""""""""""""""""
 
@@ -149,8 +162,8 @@ let mapleader = "\<Space>"
 
 nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>x :Commands<CR>
-noremap <C-F> :GFiles<CR>
-noremap <C-N> :GFiles?<CR>
+noremap <C-n> :GFiles<CR>
+noremap <C-f> :GFiles?<CR>
 " nnoremap <Leader>f :GFiles<CR>
 nnoremap <Leader>a :Ag<CR>
 nnoremap <Leader>k :bd<CR>
@@ -184,6 +197,15 @@ let g:deoplete#enable_auto_delimiter = 1
 inoremap <expr><BS> deoplete#smart_close_popup()."<C-h>"
 """"""""""""""""""""""""""""""
 
+
+""""""""""""""""""""""""""""""
+" NERDTree設定
+""""""""""""""""""""""""""""""
+" autocmd VimEnter * NERDTree
+autocmd VimEnter * wincmd p
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+map  <C-p> :NERDTreeFocus<CR>
+""""""""""""""""""""""""""""""
 
 
 
